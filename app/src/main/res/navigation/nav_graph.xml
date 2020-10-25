@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/hostFragment">
+
+    <!-- TODO add binding n-days       -->
+    <fragment
+        android:id="@+id/hostFragment"
+        android:name="ru.bmstu.iu9.rk1.MultipleDaysFragment"
+        android:label="Currency in last 10 days"
+        tools:layout="@layout/multiple_days_fragment">
+        <action
+            android:id="@+id/action_hostFragment_to_secondFragment"
+            app:destination="@id/secondFragment"/>
+    </fragment>
+    <!--   TODO add day -->
+    <fragment
+        android:id="@+id/secondFragment"
+        android:name="ru.bmstu.iu9.rk1.OneDayFragment"
+        android:label="Currency on this day"
+        tools:layout="@layout/one_day_currency_fragment"/>
+</navigation>

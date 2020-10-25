@@ -16,35 +16,43 @@ val retrofit = Retrofit.Builder()
 interface ExampleApiService {
     @GET("data/v2/histoday")
     fun getDailyData(
-            @Query("fsym") fsym: String,
-            @Query("tsym") tsym: String,
-            @Query("limit") limit: Int
+        @Query("fsym") fsym: String,
+        @Query("tsym") tsym: String,
+        @Query("limit") limit: Int
+    ): Call<ExchangeResponse>
+
+    @GET("data/v2/histohour")
+    fun getHourlyData(
+        @Query("fsym") fsym: String,
+        @Query("tsym") tsym: String,
+        @Query("limit") limit: Int,
+        @Query("toTs") toTs: String
     ): Call<ExchangeResponse>
 }
 
-
 data class ExchangeResponse(
-        val Response:String,
-        val Message:String,
-        val HasWarning:Boolean,
-        val ExchangeData:ExchangeData
+    val Response: String,
+    val Message: String,
+    val HasWarning: Boolean,
+    val Type: Int,
+    val Data: ExchangeData
 )
 
-data class ExchangeData (
-        val Aggregated:Boolean,
-        val TimeFrom:String,
-        val TimeTo:String,
-        val Data:List<ExchangeDataItem>
+data class ExchangeData(
+    val Aggregated: Boolean,
+    val TimeFrom: String,
+    val TimeTo: String,
+    val Data: List<ExchangeDataItem>
 )
 
 data class ExchangeDataItem(
-        val time:String,
-        val high:Float,
-        val low:Float,
-        val open:Float,
-        val volumefrom: Float,
-        val volumeto: Float,
-        val close:Float,
-        val conversionType:String,
-        val conversionSymbol:String
+    val time: String,
+    val high: Float,
+    val low: Float,
+    val open: Float,
+    val volumefrom: Float,
+    val volumeto: Float,
+    val close: Float,
+    val conversionType: String,
+    val conversionSymbol: String
 )
