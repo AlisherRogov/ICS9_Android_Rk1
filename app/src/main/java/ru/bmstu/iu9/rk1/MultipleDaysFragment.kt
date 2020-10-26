@@ -30,7 +30,7 @@ class MultipleDaysFragment : Fragment() {
         //TODO add data send between fragments
 
         val api = retrofit.create(ExampleApiService::class.java)
-        api.getDailyData("BTC", "USD", 10).enqueue(object : retrofit2.Callback<ExchangeResponse> {
+        api.getDailyData("BTC", MainActivity.getCurrentCurrency(), MainActivity.getDaysNumber()).enqueue(object : retrofit2.Callback<ExchangeResponse> {
             override fun onResponse(
                 call: Call<ExchangeResponse>,
                 response: Response<ExchangeResponse>

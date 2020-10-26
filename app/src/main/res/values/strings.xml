@@ -3,4 +3,8 @@
     <string name="settings">Settings</string>
     <string name="btc">BTC</string>
     <string name="go_to_site">Go to site</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="list_setting">list_setting</string>
+    <string name="list_title">list_title</string>
+    <string name="list_dialog_title">Choose currency</string>
 </resources>
