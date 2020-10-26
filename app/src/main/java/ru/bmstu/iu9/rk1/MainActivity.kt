@@ -19,9 +19,11 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         setContentView(R.layout.activity_main)
         val navController = this.findNavController(R.id.test_nav_fragment)
         NavigationUI.setupActionBarWithNavController(this, navController)
+
         val sharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(this)
         sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+
         findViewById<Button>(R.id.goToSite).setOnClickListener {
             intent = Intent(Intent.ACTION_VIEW)
             intent.data =
@@ -55,10 +57,12 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, p1: String?) {
-        CURRENT_CURRENCY = sharedPreferences?.getString("list", "USD").toString()
         if (sharedPreferences != null) {
+            CURRENT_CURRENCY = sharedPreferences.getString("list", CURRENT_CURRENCY).toString()
             DAYS_TO_SHOW_NUMBER =
-                Integer.parseInt(sharedPreferences.getString("text", "10").toString())
+                Integer.parseInt(
+                    sharedPreferences.getString("text", DAYS_TO_SHOW_NUMBER.toString()).toString()
+                )
         }
     }
 
@@ -71,7 +75,6 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     companion object {
         private var CURRENT_CURRENCY: String = "USD"
         private var DAYS_TO_SHOW_NUMBER: Int = 10
-
         fun getCurrentCurrency() = CURRENT_CURRENCY
         fun getDaysNumber() = DAYS_TO_SHOW_NUMBER
     }

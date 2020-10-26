@@ -42,7 +42,6 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ElemViewHolder>() {
         private val dollarTextViewRow: TextView = itemView.findViewById(R.id.toDollar)
         private var ts: String = ""
 
-
         fun setDataAndListener(item: String, sth: Float) {
             dateTextViewRow.text = getDateTime(item)
             dollarTextViewRow.text = sth.toString()
@@ -54,8 +53,8 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ElemViewHolder>() {
         @SuppressLint("SimpleDateFormat")
         private fun getDateTime(s: String): String? {
             return try {
-                val sdf = SimpleDateFormat("dd/MM/yyyy")
-                val netDate = Date(s.toLong() * 1000)
+                val sdf = SimpleDateFormat(DATE_FORMAT)
+                val netDate = Date(s.toLong() * MS)
                 sdf.format(netDate)
             } catch (e: Exception) {
                 e.toString()
@@ -63,8 +62,10 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ElemViewHolder>() {
         }
 
         companion object {
-            fun from(parent: ViewGroup): ElemViewHolder {
+            private const val DATE_FORMAT = "dd/MM/yyyy"
+            private const val MS: Int = 1000
 
+            fun from(parent: ViewGroup): ElemViewHolder {
                 val context = parent.context
                 val layoutIdForListItem = R.layout.list_item
                 val inflater = LayoutInflater.from(context)

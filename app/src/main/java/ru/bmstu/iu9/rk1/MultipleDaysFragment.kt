@@ -29,10 +29,8 @@ class MultipleDaysFragment : Fragment() {
         viewManager = LinearLayoutManager(context)
         viewAdapter = ListAdapter()
 
-        //TODO add data send between fragments
-
         val api = retrofit.create(ExampleApiService::class.java)
-        api.getDailyData("BTC", MainActivity.getCurrentCurrency(), MainActivity.getDaysNumber())
+        api.getDailyData(BITCOIN, MainActivity.getCurrentCurrency(), MainActivity.getDaysNumber())
             .enqueue(object : retrofit2.Callback<ExchangeResponse> {
                 override fun onResponse(
                     call: Call<ExchangeResponse>,
@@ -47,15 +45,17 @@ class MultipleDaysFragment : Fragment() {
                 }
 
                 override fun onFailure(call: Call<ExchangeResponse>, t: Throwable) {
-                    Log.d("daniele", "onfailuer")
+                    Log.d(TAG, FAIL_MSG)
                 }
 
             })
         return view
     }
 
-
     companion object {
+        private const val BITCOIN = "BTC"
+        private const val TAG = "dani"
+        private const val FAIL_MSG = "Fail"
         fun newInstance() = MultipleDaysFragment()
     }
 

@@ -24,17 +24,15 @@ class OneDayFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.one_day_currency_fragment, container, false)
         val api = retrofit.create(ExampleApiService::class.java)
-        val time = requireArguments().getString("time")
+        val time = requireArguments().getString(ARGUMENT_KEY)
 
         if (time != null) {
-            api.getHourlyData("BTC", MainActivity.getCurrentCurrency(), 1, time)
+            api.getHourlyData(BITCOIN, MainActivity.getCurrentCurrency(), 1, time)
                 .enqueue(object : retrofit2.Callback<ExchangeResponse> {
                     override fun onResponse(
                         call: Call<ExchangeResponse>,
                         response: Response<ExchangeResponse>
                     ) {
-                        Log.d("daniele", response.body()?.Data?.Data!![1].time)
-
                         binding.date.text = getDateTime(response.body()?.Data?.Data!![1].time)
                         binding.toDollar.text = response.body()?.Data?.Data!![1].close.toString()
                         binding.low.text = "Lowest = ${response.body()?.Data?.Data!![1].low}"
@@ -42,18 +40,18 @@ class OneDayFragment : Fragment() {
                     }
 
                     override fun onFailure(call: Call<ExchangeResponse>, t: Throwable) {
+                        Log.d(TAG, FAIL_MSG)
                     }
                 })
         }
         return binding.root
     }
 
-
     @SuppressLint("SimpleDateFormat")
     private fun getDateTime(s: String): String? {
         return try {
-            val sdf = SimpleDateFormat("dd/MM hh:mm a")
-            val netDate = Date(s.toLong() * 1000)
+            val sdf = SimpleDateFormat(DATE_FORMAT)
+            val netDate = Date(s.toLong() * MS)
             sdf.format(netDate)
         } catch (e: Exception) {
             e.toString()
@@ -61,6 +59,12 @@ class OneDayFragment : Fragment() {
     }
 
     companion object {
+        private const val DATE_FORMAT = "dd/MM hh:mm a"
+        private const val MS = 1000
+        private const val ARGUMENT_KEY = "time"
+        private const val BITCOIN = "BTC"
+        private const val TAG = "dani"
+        private const val FAIL_MSG = "Fail"
         fun newInstance() = MultipleDaysFragment()
     }
 }
