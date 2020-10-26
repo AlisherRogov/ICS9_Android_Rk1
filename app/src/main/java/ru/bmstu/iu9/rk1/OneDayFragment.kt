@@ -24,28 +24,31 @@ class OneDayFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.one_day_currency_fragment, container, false)
         val api = retrofit.create(ExampleApiService::class.java)
+        val time = requireArguments().getString("time")
 
-        //TODO send a date that we want look
-        api.getHourlyData("BTC", "USD", 1, "1603656000")
-            .enqueue(object : retrofit2.Callback<ExchangeResponse> {
-                override fun onResponse(
-                    call: Call<ExchangeResponse>,
-                    response: Response<ExchangeResponse>
-                ) {
-                    Log.d("daniele", response.body()?.Data?.Data!![1].time)
+        if (time != null) {
+            api.getHourlyData("BTC", MainActivity.getCurrentCurrency(), 1, time)
+                .enqueue(object : retrofit2.Callback<ExchangeResponse> {
+                    override fun onResponse(
+                        call: Call<ExchangeResponse>,
+                        response: Response<ExchangeResponse>
+                    ) {
+                        Log.d("daniele", response.body()?.Data?.Data!![1].time)
 
-                    binding.date.text = getDateTime(response.body()?.Data?.Data!![1].time)
-                    binding.toDollar.text = response.body()?.Data?.Data!![1].close.toString()
-                }
+                        binding.date.text = getDateTime(response.body()?.Data?.Data!![1].time)
+                        binding.toDollar.text = response.body()?.Data?.Data!![1].close.toString()
+                        binding.low.text = "Lowest = ${response.body()?.Data?.Data!![1].low}"
+                        binding.high.text = "Highest = ${response.body()?.Data?.Data!![1].high}"
+                    }
 
-                override fun onFailure(call: Call<ExchangeResponse>, t: Throwable) {
-                }
-            })
+                    override fun onFailure(call: Call<ExchangeResponse>, t: Throwable) {
+                    }
+                })
+        }
         return binding.root
     }
 
 
-    //TODO вынести в одно место
     @SuppressLint("SimpleDateFormat")
     private fun getDateTime(s: String): String? {
         return try {

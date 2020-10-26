@@ -26,8 +26,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
-                android:textSize="20sp"
-                android:text="DAte"/>
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/toDollar"
                 android:layout_marginStart="100dp"
@@ -36,8 +36,7 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:textSize="22sp"
-                android:textColor="@color/green"
-                android:text="12334"/>
+                android:textColor="@color/green" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

@@ -7,4 +7,6 @@
     <string name="list_setting">list_setting</string>
     <string name="list_title">list_title</string>
     <string name="list_dialog_title">Choose currency</string>
+    <string name="refresh">Refresh</string>
+    <string name="edit_Text_preference">Click to show a text entry dialog</string>
 </resources>

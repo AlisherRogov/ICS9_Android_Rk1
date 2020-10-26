@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
@@ -21,7 +22,11 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ElemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ElemViewHolder {
         val holder = ElemViewHolder.from(parent)
-        holder.itemView.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_hostFragment_to_secondFragment))
+        holder.itemView.setOnClickListener {
+            val bundle = bundleOf("time" to holder.getDate())
+            Navigation.findNavController(holder.itemView)
+                .navigate(R.id.action_hostFragment_to_secondFragment, bundle)
+        }
         return holder
     }
 
@@ -35,12 +40,16 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ElemViewHolder>() {
     class ElemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val dateTextViewRow: TextView = itemView.findViewById(R.id.date)
         private val dollarTextViewRow: TextView = itemView.findViewById(R.id.toDollar)
+        private var ts: String = ""
 
 
         fun setDataAndListener(item: String, sth: Float) {
             dateTextViewRow.text = getDateTime(item)
             dollarTextViewRow.text = sth.toString()
+            ts = item
         }
+
+        fun getDate() = ts
 
         @SuppressLint("SimpleDateFormat")
         private fun getDateTime(s: String): String? {

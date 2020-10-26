@@ -21,7 +21,6 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
                 .commit()
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
     }
 
     override fun onDestroy() {
@@ -29,7 +28,6 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
         PreferenceManager.getDefaultSharedPreferences(this)
             .unregisterOnSharedPreferenceChangeListener(this)
     }
-
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, s: String?) {
         val preference: Preference? = s?.let { settingsFragment.findPreference(it) }
@@ -53,7 +51,6 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
             if (prefIndex >= 0) {
                 listPreference.summary = listPreference.entries[prefIndex]
             }
-            Toast.makeText(this, "Please, restart app!", Toast.LENGTH_LONG).show()
         } else if (preference is EditTextPreference) {
             val ep: EditTextPreference = preference
             ep.summary = ep.text

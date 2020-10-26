@@ -2,9 +2,11 @@ package ru.bmstu.iu9.rk1
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
@@ -20,8 +22,12 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         val sharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(this)
         sharedPreferences.registerOnSharedPreferenceChangeListener(this)
-        val intent = Intent(this, SettingsActivity::class.java)
-        startActivity(intent)
+        findViewById<Button>(R.id.goToSite).setOnClickListener {
+            intent = Intent(Intent.ACTION_VIEW)
+            intent.data =
+                Uri.parse("https://min-api.cryptocompare.com/documentation?key=Historical&cat=dataHistohour")
+            startActivity(intent)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -41,6 +47,10 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             startActivity(intent)
             return true
         }
+        if (itemId == R.id.refresh) {
+            finish()
+            startActivity(intent)
+        }
         return super.onOptionsItemSelected(item)
     }
 
@@ -50,7 +60,6 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             DAYS_TO_SHOW_NUMBER =
                 Integer.parseInt(sharedPreferences.getString("text", "10").toString())
         }
-
     }
 
     override fun onDestroy() {
