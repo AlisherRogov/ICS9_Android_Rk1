@@ -1,0 +1,10 @@
+<resources>
+    <array name="settings_list_preference_titles">
+        <item>"USD"</item>
+        <item>"RUB"</item>
+    </array>
+    <array name="settings_list_preference_values">
+        <item>"USD"</item>
+        <item>"RUB"</item>
+    </array>
+</resources>
